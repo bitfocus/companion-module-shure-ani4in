@@ -1,0 +1,25 @@
+{
+	"id": "shure-ani4in",
+	"name": "shure-ani4in",
+	"shortname": "ANI4IN",
+	"description": "Shure ANI4IN Audio Network Interface",
+	"version": "1.0.0",
+	"license": "MIT",
+	"repository": "git+https://github.com/bitfocus/companion-module-shure-ani4in.git",
+	"bugs": "https://github.com/bitfocus/companion-module-shure-ani4in/issues",
+	"maintainers": [
+		{
+			"name": "Jeremy"
+		}
+	],
+	"legacyIds": [],
+	"runtime": {
+		"type": "node18",
+		"api": "nodejs-ipc",
+		"apiVersion": "0.0.0",
+		"entrypoint": "../src/main.js"
+	},
+	"manufacturer": "Shure",
+	"products": ["ANI4IN", "ANI4IN-BLOCK", "ANI4IN-XLR"],
+	"keywords": ["Shure", "ANI4IN", "Dante", "Audio", "Network", "Interface"]
+}
