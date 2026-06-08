@@ -1,4 +1,4 @@
-import { InstanceBase, runEntrypoint } from '@companion-module/base'
+import { InstanceBase, InstanceStatus, runEntrypoint } from '@companion-module/base'
 import { getConfigFields } from './config.js'
 import { upgradeScripts } from './upgrades.js'
 import { updateActions } from './actions.js'
@@ -9,11 +9,16 @@ import { Ani4inApi } from './api.js'
 
 class ShureAni4inInstance extends InstanceBase {
 	async init(config) {
-		this.config = config
-		this.api = new Ani4inApi(this)
+		try {
+			this.config = config
+			this.api = new Ani4inApi(this)
 
-		this.initModule()
-		this.api.connect()
+			this.initModule()
+			this.api.connect()
+		} catch (e) {
+			this.log('error', `Failed to initialize: ${e?.message ?? e}`)
+			this.updateStatus(InstanceStatus.UnknownError, e?.message ?? 'Initialization failed')
+		}
 	}
 
 	initModule() {
