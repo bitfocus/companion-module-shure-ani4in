@@ -7,9 +7,10 @@ export function updateVariableDefinitions(self) {
 		{ variableId: 'device_serial', name: 'Serial Number' },
 		{ variableId: 'device_firmware', name: 'Firmware Version' },
 		{ variableId: 'device_id', name: 'Device ID' },
-		{ variableId: 'device_ip', name: 'Audio IP Address' },
-		{ variableId: 'device_subnet', name: 'Audio Subnet' },
-		{ variableId: 'device_gateway', name: 'Audio Gateway' },
+		{ variableId: 'device_mgmt_ip', name: 'Management IP Address (the Target IP you connect to)' },
+		{ variableId: 'device_ip', name: 'Dante (Audio) IP Address — not the management/Target IP' },
+		{ variableId: 'device_subnet', name: 'Dante (Audio) Subnet' },
+		{ variableId: 'device_gateway', name: 'Dante (Audio) Gateway' },
 		{ variableId: 'device_mac', name: 'MAC Address' },
 		{ variableId: 'dante_name', name: 'Dante Device Name' },
 		{ variableId: 'active_preset', name: 'Active Preset Number' },
@@ -57,6 +58,7 @@ export function getVariableValues(self) {
 	values['device_serial'] = d.serial_num.trim()
 	values['device_firmware'] = d.fw_ver.trim()
 	values['device_id'] = d.device_id.trim()
+	values['device_mgmt_ip'] = self.config && self.config.host ? self.config.host : ''
 	values['device_ip'] = d.ip_address.trim()
 	values['device_subnet'] = d.subnet.trim()
 	values['device_gateway'] = d.gateway.trim()

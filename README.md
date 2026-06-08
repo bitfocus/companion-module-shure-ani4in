@@ -59,6 +59,22 @@ Communicates via TCP command strings on port 2202.
 | **Metering Rate** | Metering sample interval in milliseconds (min 100) | `500` |
 | **Polling Interval** | How often to poll for full state refresh (seconds) | `30` |
 
+### Network addresses: management vs Dante
+
+The ANI4IN has **two separate IP addresses**, and they are easy to mix up:
+
+- **Management / control address** — this is the **Target IP** the module connects to, and the address that serves the device's web interface. Command strings use port `2202`.
+- **Dante (audio-network) primary address** — the address used for Dante audio. The device reports this via `IP_ADDR_NET_AUDIO_PRIMARY`, surfaced here as the `device_ip` variable.
+
+These are almost always **different addresses** (for example: management `192.168.8.225`, Dante `192.168.8.198`). Configure the module with the **management address** — *not* the Dante address.
+
+> ⚠️ Because of this, the `device_ip`, `device_subnet`, and `device_gateway` variables report the **Dante** side and will **not** match the Target IP you connected to. That is expected.
+
+**Finding the management address:**
+
+- Check your **router / DHCP** lease table, or
+- Use the **[Shure Web Device Discovery](https://www.shure.com/en-US/shop/software/web_device_discovery)** application. The ANI4IN must have its **Web Device Discovery** option enabled in the device's web interface for it to appear in the discovery app.
+
 ## Features
 
 ### Actions
@@ -114,9 +130,9 @@ Communicates via TCP command strings on port 2202.
 | `device_serial` | Serial number |
 | `device_firmware` | Firmware version |
 | `device_id` | Device ID |
-| `device_ip` | Audio network IP address |
-| `device_subnet` | Audio network subnet |
-| `device_gateway` | Audio network gateway |
+| `device_ip` | Dante (audio-network) IP address — **not** the management/Target IP (see [Network addresses](#network-addresses-management-vs-dante)) |
+| `device_subnet` | Dante (audio-network) subnet |
+| `device_gateway` | Dante (audio-network) gateway |
 | `device_mac` | Control network MAC address |
 | `dante_name` | Dante device name |
 | `active_preset` | Active preset number |
@@ -154,15 +170,16 @@ Communicates via TCP command strings on port 2202.
 
 The module includes ready-to-use preset buttons organized by category:
 
-- **Channel Strip** - Name + gain with signal-colored background (green/amber/red), turns red when muted
-- **Audio Mute** - Per-channel mute toggles, mute all, unmute all
+- **Channel Strip** - Name + gain with signal-colored background (green/amber/red), turns red when muted; **press to toggle mute**
+- **Audio Mute** - Per-channel mute toggles, mute all, unmute all, and toggle mute all
 - **Phantom Power** - Per-channel +48V toggles (orange when active)
-- **Gain Control** - Analog +3/-3 dB and digital +1/-1 dB per channel
+- **Analog Gain Control** - Analog +3/-3 dB per channel
+- **Digital Gain Control** - Digital +1/-1 dB per channel
 - **Signal Monitoring** - Clip indicators, audio level displays, limiter indicators
 - **Mic Logic** - Gating logic indicators, LED in state controls
 - **Presets** - Preset recall buttons 1-10 (green when active)
 - **Audio Summing** - Summing mode selectors (blue when active)
-- **Device** - Device info, name, IP, identify, encryption status, LED brightness, meter mode, reboot
+- **Device** - Device info, name, IPs (management + Dante), identify, encryption status, LED brightness, meter mode, reboot
 
 ## Connection Details
 

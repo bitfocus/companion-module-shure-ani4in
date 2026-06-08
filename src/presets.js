@@ -32,7 +32,12 @@ export function updatePresets(self) {
 				color: WHITE,
 				bgcolor: DARK_GRAY,
 			},
-			steps: [{ down: [], up: [] }],
+			steps: [
+				{
+					down: [{ actionId: 'set_audio_mute', options: { channel: String(ch), state: 'TOGGLE' } }],
+					up: [],
+				},
+			],
 			feedbacks: [
 				{
 					feedbackId: 'signal_present',
@@ -114,8 +119,8 @@ export function updatePresets(self) {
 		// ──────────────── Gain Up ────────────────
 		presets[`gain_up_ch${ch}`] = {
 			type: 'button',
-			category: 'Gain Control',
-			name: `Gain Up Ch ${ch}`,
+			category: 'Analog Gain Control',
+			name: `Analog Gain Up Ch ${ch}`,
 			style: {
 				show_topbar: false,
 				text: '+3',
@@ -135,8 +140,8 @@ export function updatePresets(self) {
 		// ──────────────── Gain Down ────────────────
 		presets[`gain_down_ch${ch}`] = {
 			type: 'button',
-			category: 'Gain Control',
-			name: `Gain Down Ch ${ch}`,
+			category: 'Analog Gain Control',
+			name: `Analog Gain Down Ch ${ch}`,
 			style: {
 				show_topbar: false,
 				text: '-3',
@@ -156,7 +161,7 @@ export function updatePresets(self) {
 		// ──────────────── Digital Gain Fine Up (+1 dB) ────────────────
 		presets[`dgain_up_ch${ch}`] = {
 			type: 'button',
-			category: 'Gain Control',
+			category: 'Digital Gain Control',
 			name: `Digital Gain Up Ch ${ch}`,
 			style: {
 				show_topbar: false,
@@ -177,7 +182,7 @@ export function updatePresets(self) {
 		// ──────────────── Digital Gain Fine Down (-1 dB) ────────────────
 		presets[`dgain_down_ch${ch}`] = {
 			type: 'button',
-			category: 'Gain Control',
+			category: 'Digital Gain Control',
 			name: `Digital Gain Down Ch ${ch}`,
 			style: {
 				show_topbar: false,
@@ -225,7 +230,7 @@ export function updatePresets(self) {
 			style: {
 				show_topbar: false,
 				text: `CH${ch} GATE`,
-				size: 'auto',
+				size: '14',
 				color: GRAY,
 				bgcolor: BLACK,
 			},
@@ -247,7 +252,7 @@ export function updatePresets(self) {
 			style: {
 				show_topbar: false,
 				text: `CH${ch}\\nLED IN\\nOFF`,
-				size: 'auto',
+				size: '14',
 				color: GRAY,
 				bgcolor: BLACK,
 			},
@@ -331,7 +336,7 @@ export function updatePresets(self) {
 		style: {
 			show_topbar: false,
 			text: 'Mute All',
-			size: 'auto',
+			size: '14',
 			color: WHITE,
 			bgcolor: DARK_GRAY,
 		},
@@ -357,7 +362,7 @@ export function updatePresets(self) {
 		style: {
 			show_topbar: false,
 			text: 'Unmute All',
-			size: 'auto',
+			size: '14',
 			color: WHITE,
 			bgcolor: DARK_GRAY,
 		},
@@ -368,6 +373,32 @@ export function updatePresets(self) {
 			},
 		],
 		feedbacks: [],
+	}
+
+	presets['mute_all_toggle'] = {
+		type: 'button',
+		category: 'Audio Mute',
+		name: 'Toggle Mute All',
+		style: {
+			show_topbar: false,
+			text: 'Toggle\\nMute All',
+			size: '14',
+			color: WHITE,
+			bgcolor: DARK_GRAY,
+		},
+		steps: [
+			{
+				down: [{ actionId: 'toggle_mute_all' }],
+				up: [],
+			},
+		],
+		feedbacks: [
+			{
+				feedbackId: 'any_muted',
+				options: {},
+				style: { bgcolor: RED, color: WHITE },
+			},
+		],
 	}
 
 	// ──────────────────────────── Preset Recall Buttons ────────────────────────────
@@ -407,7 +438,7 @@ export function updatePresets(self) {
 		style: {
 			show_topbar: false,
 			text: 'Identify',
-			size: 'auto',
+			size: '14',
 			color: WHITE,
 			bgcolor: PURPLE,
 		},
@@ -430,8 +461,8 @@ export function updatePresets(self) {
 		name: 'Device Info',
 		style: {
 			show_topbar: false,
-			text: `${V('dante_name')}\\n${V('device_ip')}\\nFW: ${V('device_firmware')}`,
-			size: 'auto',
+			text: `${V('dante_name')}\\nDante: ${V('device_ip')}\\nFW: ${V('device_firmware')}`,
+			size: '7',
 			color: WHITE,
 			bgcolor: BLACK,
 		},
@@ -446,7 +477,7 @@ export function updatePresets(self) {
 		style: {
 			show_topbar: false,
 			text: V('dante_name'),
-			size: 'auto',
+			size: '14',
 			color: WHITE,
 			bgcolor: BLACK,
 		},
@@ -460,8 +491,8 @@ export function updatePresets(self) {
 		name: 'Device IP',
 		style: {
 			show_topbar: false,
-			text: V('device_ip'),
-			size: 'auto',
+			text: `Mgmt\\n${V('device_mgmt_ip')}\\nDante\\n${V('device_ip')}`,
+			size: '7',
 			color: WHITE,
 			bgcolor: BLACK,
 		},
@@ -476,7 +507,7 @@ export function updatePresets(self) {
 		style: {
 			show_topbar: false,
 			text: `Encrypt\\n${V('encryption')}`,
-			size: 'auto',
+			size: '14',
 			color: GRAY,
 			bgcolor: BLACK,
 		},
@@ -497,7 +528,7 @@ export function updatePresets(self) {
 		style: {
 			show_topbar: false,
 			text: 'Reboot',
-			size: 'auto',
+			size: '14',
 			color: WHITE,
 			bgcolor: DARK_RED,
 		},
@@ -524,7 +555,7 @@ export function updatePresets(self) {
 			style: {
 				show_topbar: false,
 				text: lvl.label,
-				size: 'auto',
+				size: '14',
 				color: WHITE,
 				bgcolor: DARK_GRAY,
 			},
@@ -546,7 +577,7 @@ export function updatePresets(self) {
 		style: {
 			show_topbar: false,
 			text: 'Meter\\nPre',
-			size: 'auto',
+			size: '14',
 			color: WHITE,
 			bgcolor: DARK_GRAY,
 		},
@@ -572,7 +603,7 @@ export function updatePresets(self) {
 		style: {
 			show_topbar: false,
 			text: 'Meter\\nPost',
-			size: 'auto',
+			size: '14',
 			color: WHITE,
 			bgcolor: DARK_GRAY,
 		},
@@ -607,7 +638,7 @@ export function updatePresets(self) {
 			style: {
 				show_topbar: false,
 				text: `Sum\\n${mode.label}`,
-				size: 'auto',
+				size: '14',
 				color: WHITE,
 				bgcolor: DARK_GRAY,
 			},

@@ -209,6 +209,16 @@ export function updateActions(self) {
 			},
 		},
 
+		toggle_mute_all: {
+			name: 'Toggle Mute All Channels',
+			description: 'Unmutes all if any channel is currently muted; otherwise mutes all',
+			options: [],
+			callback: async () => {
+				const anyMuted = self.api.channels.some((ch) => ch.audio_mute === 'ON')
+				self.api.sendCommand(`SET 0 AUDIO_MUTE ${anyMuted ? 'OFF' : 'ON'}`)
+			},
+		},
+
 		// ──────────────────────────── LED Brightness ────────────────────────────
 		set_led_brightness: {
 			name: 'Set LED Brightness',
