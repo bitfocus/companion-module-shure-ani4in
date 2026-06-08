@@ -3,7 +3,7 @@
 	"name": "shure-ani4in",
 	"shortname": "ANI4IN",
 	"description": "Shure ANI4IN Audio Network Interface",
-	"version": "1.0.3",
+	"version": "1.1.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-shure-ani4in.git",
 	"bugs": "https://github.com/bitfocus/companion-module-shure-ani4in/issues",
