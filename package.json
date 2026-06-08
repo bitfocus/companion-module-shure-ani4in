@@ -1,8 +1,9 @@
 {
 	"name": "companion-module-shure-ani4in",
-	"version": "1.0.1",
+	"version": "1.0.3",
 	"main": "src/main.js",
 	"type": "module",
+	"packageManager": "yarn@4.12.0",
 	"scripts": {
 		"format": "prettier -w .",
 		"package": "companion-module-build"
